@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PostNoman</title>
+    <link rel="stylesheet" href="sidepanel.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>PostNoman</h1>
+            <div class="header-actions">
+                <button id="clearHistory" class="btn btn-secondary">清除历史</button>
+            </div>
+        </header>
+
+        <!-- URL输入区域 -->
+        <div class="url-input-row">
+            <select id="httpMethod" class="method-select">
+                <option value="GET">GET</option>
+                <option value="POST">POST</option>
+                <option value="PUT">PUT</option>
+                <option value="DELETE">DELETE</option>
+                <option value="PATCH">PATCH</option>
+                <option value="HEAD">HEAD</option>
+                <option value="OPTIONS">OPTIONS</option>
+            </select>
+            <input type="text" id="urlInput" class="url-input" placeholder="输入请求URL">
+            <button id="sendRequest" class="btn btn-primary">发送</button>
+        </div>
+
+        <!-- 可滚动的主内容区域 -->
+        <div class="scrollable-content">
+            <!-- 请求配置区域 -->
+            <div class="request-config">
+                <div class="tabs">
+                    <button class="tab-button active" data-tab="headers">Headers</button>
+                    <button class="tab-button" data-tab="params">Params</button>
+                    <button class="tab-button" data-tab="body">Body</button>
+                    <button class="tab-button" data-tab="auth">Auth</button>
+                </div>
+
+                <div class="tab-content">
+                    <div id="headers" class="tab-panel active">
+                        <div class="key-value-pairs" id="headersContainer">
+                            <div class="key-value-row">
+                                <input type="text" class="key-input" placeholder="Header名称">
+                                <input type="text" class="value-input" placeholder="Header值">
+                                <button class="btn-remove" data-action="remove">×</button>
+                            </div>
+                        </div>
+                        <button id="addHeader" class="btn btn-secondary btn-sm">+ 添加Header</button>
+                    </div>
+
+                    <div id="params" class="tab-panel">
+                        <div class="key-value-pairs" id="paramsContainer">
+                            <div class="key-value-row">
+                                <input type="text" class="key-input" placeholder="参数名称">
+                                <input type="text" class="value-input" placeholder="参数值">
+                                <button class="btn-remove" data-action="remove">×</button>
+                            </div>
+                        </div>
+                        <button id="addParam" class="btn btn-secondary btn-sm">+ 添加参数</button>
+                    </div>
+
+                    <div id="body" class="tab-panel">
+                        <select id="bodyType" class="body-type-select">
+                            <option value="json">JSON</option>
+                            <option value="form">Form Data</option>
+                            <option value="text">Raw Text</option>
+                        </select>
+                        <textarea id="requestBody" class="request-body" placeholder="请求体内容"></textarea>
+                    </div>
+
+                    <div id="auth" class="tab-panel">
+                        <select id="authType" class="auth-type-select">
+                            <option value="none">No Auth</option>
+                            <option value="bearer">Bearer Token</option>
+                            <option value="basic">Basic Auth</option>
+                        </select>
+                        <div id="authContainer" class="auth-container"></div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="includeCookies">
+                                携带当前页面Cookie
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 响应区域 -->
+            <div id="responseContainer" class="response-area">
+                <div class="response-header">
+                    <h3>响应</h3>
+                    <div class="response-info" id="responseInfo">
+                        <span class="status-code" id="statusCode">--</span>
+                        <span class="response-time" id="responseTime">--</span>
+                    </div>
+                </div>
+                <div class="response-tabs">
+                    <button class="tab-button active" data-tab="response-body">Body</button>
+                    <button class="tab-button" data-tab="response-headers">Headers</button>
+                </div>
+                <div class="response-content">
+                    <div id="response-body" class="tab-panel active">
+                        <pre id="responseBody" class="response-body-content"></pre>
+                    </div>
+                    <div id="response-headers" class="tab-panel">
+                        <pre id="responseHeaders" class="response-headers-content"></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 历史记录区域 -->
+            <div class="history-section">
+                <div class="record-header">
+                    <h3>请求历史</h3>
+                    <div class="record-info">
+                        <input id="autoRecordUrl" placeholder="要记录的URL(支持*开头)" />
+                        <button id="autoRecordBtn">开始记录</button>
+                        <button id="exportBtn">下载记录</button>
+                    </div>
+                </div>
+                <div id="historyList" class="history-list"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="sidepanel.js"></script>
+</body>
+
+</html>
